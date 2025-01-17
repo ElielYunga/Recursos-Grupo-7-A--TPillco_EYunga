@@ -5,7 +5,7 @@ MONITOR_DURATION=300  # 5 minutos
 END_TIME=$((SECONDS + MONITOR_DURATION))
 
 # Nombre del emulador a monitorear (por ejemplo: 'mgba', 'retroarch', etc.)
-EMULATOR_NAME="mgba"  # Cambia esto según el emulador que uses
+EMULATOR_NAME="mgba"  # Cambia esto segÃºn el emulador que uses
 
 # Archivo CSV para almacenar los datos
 OUTPUT_FILE="monitoreo_recursos.csv"
@@ -13,14 +13,14 @@ OUTPUT_FILE="monitoreo_recursos.csv"
 # Mensaje inicial
 echo "-----------------------------"
 echo "   Monitoreo de Raspberry Pi"
-echo "   Duración: $((MONITOR_DURATION / 60)) minutos"
+echo "   DuraciÃ³n: $((MONITOR_DURATION / 60)) minutos"
 echo "   Guardando datos en: $OUTPUT_FILE"
 echo "-----------------------------"
 
 # Crear encabezado para el archivo CSV
-echo "Tiempo,CPU(%),RAM Usada(MB),RAM Total(MB),Temp(°C),Disco Usado(%),Emulador" > "$OUTPUT_FILE"
+echo "Tiempo,CPU(%),RAM Usada(MB),RAM Total(MB),Temp(Â°C),Disco Usado(%),Emulador" > "$OUTPUT_FILE"
 
-# Función para monitorear recursos
+# FunciÃ³n para monitorear recursos
 while [ $SECONDS -lt $END_TIME ]; do
     # Tiempo transcurrido
     CURRENT_TIME=$((END_TIME - SECONDS))
@@ -41,15 +41,15 @@ while [ $SECONDS -lt $END_TIME ]; do
     # Estado del emulador
     EMULATOR_PROCESS=$(pgrep -f "$EMULATOR_NAME")
     if [ -n "$EMULATOR_PROCESS" ]; then
-        EMULATOR_STATUS="Sí"
+        EMULATOR_STATUS="SÃ­"
     else
         EMULATOR_STATUS="No"
     fi
 
-    # Agregar datos al archivo CSV
+    # Agregar datos en un archivo CSV
     echo "$CURRENT_TIME,$CPU_USAGE,$RAM_USED,$RAM_TOTAL,$CPU_TEMP,$DISK_USAGE,$EMULATOR_STATUS" >> "$OUTPUT_FILE"
 
-    # Pausa antes de la próxima medición
+    # Pausa antes de la prÃ³xima mediciÃ³n
     sleep 1
 done
 
