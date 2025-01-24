@@ -1,317 +1,103 @@
-### Features
+# Monitoreo y Visualización de Recursos en Raspberry Pi
 
-- Support Standard Markdown / CommonMark and GFM(GitHub Flavored Markdown);
-- Full-featured: Real-time Preview, Image (cross-domain) upload, Preformatted text/Code blocks/Tables insert, Code fold, Search replace, Read only, Themes, Multi-languages, L18n, HTML entities, Code syntax highlighting...;
-- Markdown Extras : Support ToC (Table of Contents), Emoji, Task lists, @Links...;
-- Compatible with all major browsers (IE8+), compatible Zepto.js and iPad;
-- Support identification, interpretation, fliter of the HTML tags;
-- Support TeX (LaTeX expressions, Based on KaTeX), Flowchart and Sequence Diagram of Markdown extended syntax;
-- Support AMD/CMD (Require.js & Sea.js) Module Loader, and Custom/define editor plugins;
+---
 
-# Editor.md
+## Descripción
 
-![](https://pandao.github.io/editor.md/images/logos/editormd-logo-180x180.png)
+Este repositorio contiene dos scripts que permiten monitorear los recursos de una Raspberry Pi mientras ejecuta un emulador de juegos. Los datos recolectados se exportan a un archivo CSV y luego se analizan mediante gráficos para visualizar el consumo de CPU, RAM, temperatura, y uso de disco.
 
-![](https://img.shields.io/github/stars/pandao/editor.md.svg) ![](https://img.shields.io/github/forks/pandao/editor.md.svg) ![](https://img.shields.io/github/tag/pandao/editor.md.svg) ![](https://img.shields.io/github/release/pandao/editor.md.svg) ![](https://img.shields.io/github/issues/pandao/editor.md.svg) ![](https://img.shields.io/bower/v/editor.md.svg)
+---
 
+## Funcionalidades
 
-**Table of Contents**
+1. **Monitoreo de Recursos con Bash**
+   - El script `monitoreo_recursos.sh` monitorea los siguientes recursos de la Raspberry Pi:
+     - **CPU (%)**: Porcentaje de uso de la CPU.
+     - **RAM Usada (MB)**: Memoria RAM consumida en megabytes.
+     - **RAM Total (MB)**: Total de memoria disponible.
+     - **Temperatura (°C)**: Temperatura de la CPU.
+     - **Disco Usado (%)**: Porcentaje de espacio usado en el disco.
+     - **Estado del Emulador**: Indica si el emulador está activo o no.
+   - Los datos se guardan en un archivo CSV con encabezados.
 
-[TOCM]
+2. **Análisis y Visualización con Python**
+   - El script `visualizacion_recursos.py` lee el archivo CSV generado y crea gráficos de línea para analizar:
+     - Uso de CPU.
+     - Uso de RAM.
+     - Temperatura de la CPU.
+     - Uso de disco.
+   - Utiliza la biblioteca **Matplotlib** para generar las gráficas.
 
-[TOC]
+---
 
-#H1 header
-##H2 header
-###H3 header
-####H4 header
-#####H5 header
-######H6 header
-#Heading 1 link [Heading link](https://github.com/pandao/editor.md "Heading link")
-##Heading 2 link [Heading link](https://github.com/pandao/editor.md "Heading link")
-###Heading 3 link [Heading link](https://github.com/pandao/editor.md "Heading link")
-####Heading 4 link [Heading link](https://github.com/pandao/editor.md "Heading link") Heading link [Heading link](https://github.com/pandao/editor.md "Heading link")
-#####Heading 5 link [Heading link](https://github.com/pandao/editor.md "Heading link")
-######Heading 6 link [Heading link](https://github.com/pandao/editor.md "Heading link")
+## Requisitos
 
-##Headers (Underline)
+### 1. Hardware:
+   - Raspberry Pi con sistema operativo basado en Linux.
+   - Emulador de juegos instalado (por ejemplo: `mgba` o `retroarch`).
 
-H1 Header (Underline)
-=============
+### 2. Software:
+   - Bash Shell.
+   - Python 3.x con las siguientes bibliotecas instaladas:
+     - `matplotlib`
+     - `pandas`
 
-H2 Header (Underline)
--------------
+---
 
-###Characters
-                
-----
+## Cómo Usar
 
-~~Strikethrough~~ <s>Strikethrough (when enable html tag decode.)</s>
-*Italic*      _Italic_
-**Emphasis**  __Emphasis__
-***Emphasis Italic*** ___Emphasis Italic___
+### 1. **Ejecutar el Script de Monitoreo**
+   - Asegúrate de que el script `monitoreo_recursos.sh` tenga permisos de ejecución:
+     ```bash
+     chmod +x monitoreo_recursos.sh
+     ```
+   - Modifica el nombre del emulador en la variable `EMULATOR_NAME` dentro del script, si es necesario.
+   - Ejecuta el script:
+     ```bash
+     ./monitoreo_recursos.sh
+     ```
+   - El monitoreo durará 5 minutos (configurable en la variable `MONITOR_DURATION`) y los datos se guardarán en `monitoreo_recursos.csv`.
 
-Superscript: X<sub>2</sub>，Subscript: O<sup>2</sup>
+### 2. **Analizar los Datos**
+   - Asegúrate de que el archivo CSV generado (`monitoreo_recursos.csv`) esté disponible en la misma carpeta que el script Python.
+   - Ejecuta el script `visualizacion_recursos.py`:
+     ```bash
+     python3 visualizacion_recursos.py
+     ```
+   - Se generarán gráficos interactivos que muestran el consumo de recursos a lo largo del tiempo.
 
-**Abbreviation(link HTML abbr tag)**
+---
 
-The <abbr title="Hyper Text Markup Language">HTML</abbr> specification is maintained by the <abbr title="World Wide Web Consortium">W3C</abbr>.
+## Personalización
 
-###Blockquotes
+- **Duración del Monitoreo**:
+  Modifica la variable `MONITOR_DURATION` en segundos en el script Bash para cambiar el tiempo de monitoreo.
+  
+- **Nombre del Emulador**:
+  Cambia el valor de `EMULATOR_NAME` según el emulador que desees monitorear.
 
-> Blockquotes
+- **Añadir Nuevas Métricas**:
+  Puedes extender el script Bash para incluir nuevas métricas según tus necesidades.
 
-Paragraphs and Line Breaks
-                    
-> "Blockquotes Blockquotes", [Link](http://localhost/)。
+---
 
-###Links
+## Ejemplo de Visualización
 
-[Links](http://localhost/)
+Gráficos generados por el script Python incluyen:
+- **Uso de CPU (%) vs Tiempo**.
+- **Uso de RAM (MB) vs Tiempo**.
+- **Temperatura de la CPU (°C) vs Tiempo**.
+- **Uso de Disco (%) vs Tiempo**.
 
-[Links with title](http://localhost/ "link title")
+---
 
-`<link>` : <https://github.com>
+## Créditos
 
-[Reference link][id/name] 
+- **Script Bash**: Monitoreo de recursos desarrollado en Bash para sistemas Linux.
+- **Script Python**: Visualización de recursos utilizando Pandas y Matplotlib.
 
-[id/name]: http://link-url/
+---
 
-GFM a-tail link @pandao
+## Licencia
 
-###Code Blocks (multi-language) & highlighting
-
-####Inline code
-
-`$ npm install marked`
-
-####Code Blocks (Indented style)
-
-Indented 4 spaces, like `<pre>` (Preformatted Text).
-
-    <?php
-        echo "Hello world!";
-    ?>
-    
-Code Blocks (Preformatted text):
-
-    | First Header  | Second Header |
-    | ------------- | ------------- |
-    | Content Cell  | Content Cell  |
-    | Content Cell  | Content Cell  |
-
-####Javascript　
-
-```javascript
-function test(){
-	console.log("Hello world!");
-}
- 
-(function(){
-    var box = function(){
-        return box.fn.init();
-    };
-
-    box.prototype = box.fn = {
-        init : function(){
-            console.log('box.init()');
-
-			return this;
-        },
-
-		add : function(str){
-			alert("add", str);
-
-			return this;
-		},
-
-		remove : function(str){
-			alert("remove", str);
-
-			return this;
-		}
-    };
-    
-    box.fn.init.prototype = box.fn;
-    
-    window.box =box;
-})();
-
-var testBox = box();
-testBox.add("jQuery").remove("jQuery");
-```
-
-####HTML code
-
-```html
-<!DOCTYPE html>
-<html>
-    <head>
-        <mate charest="utf-8" />
-        <title>Hello world!</title>
-    </head>
-    <body>
-        <h1>Hello world!</h1>
-    </body>
-</html>
-```
-
-###Images
-
-Image:
-
-![](https://pandao.github.io/editor.md/examples/images/4.jpg)
-
-> Follow your heart.
-
-![](https://pandao.github.io/editor.md/examples/images/8.jpg)
-
-> 图为：厦门白城沙滩 Xiamen
-
-图片加链接 (Image + Link)：
-
-[![](https://pandao.github.io/editor.md/examples/images/7.jpg)](https://pandao.github.io/editor.md/examples/images/7.jpg "李健首张专辑《似水流年》封面")
-
-> 图为：李健首张专辑《似水流年》封面
-                
-----
-
-###Lists
-
-####Unordered list (-)
-
-- Item A
-- Item B
-- Item C
-     
-####Unordered list (*)
-
-* Item A
-* Item B
-* Item C
-
-####Unordered list (plus sign and nested)
-                
-+ Item A
-+ Item B
-    + Item B 1
-    + Item B 2
-    + Item B 3
-+ Item C
-    * Item C 1
-    * Item C 2
-    * Item C 3
-
-####Ordered list
-                
-1. Item A
-2. Item B
-3. Item C
-                
-----
-                    
-###Tables
-                    
-First Header  | Second Header
-------------- | -------------
-Content Cell  | Content Cell
-Content Cell  | Content Cell 
-
-| First Header  | Second Header |
-| ------------- | ------------- |
-| Content Cell  | Content Cell  |
-| Content Cell  | Content Cell  |
-
-| Function name | Description                    |
-| ------------- | ------------------------------ |
-| `help()`      | Display the help window.       |
-| `destroy()`   | **Destroy your computer!**     |
-
-| Item      | Value |
-| --------- | -----:|
-| Computer  | $1600 |
-| Phone     |   $12 |
-| Pipe      |    $1 |
-
-| Left-Aligned  | Center Aligned  | Right Aligned |
-| :------------ |:---------------:| -----:|
-| col 3 is      | some wordy text | $1600 |
-| col 2 is      | centered        |   $12 |
-| zebra stripes | are neat        |    $1 |
-                
-----
-
-####HTML entities
-
-&copy; &  &uml; &trade; &iexcl; &pound;
-&amp; &lt; &gt; &yen; &euro; &reg; &plusmn; &para; &sect; &brvbar; &macr; &laquo; &middot; 
-
-X&sup2; Y&sup3; &frac34; &frac14;  &times;  &divide;   &raquo;
-
-18&ordm;C  &quot;  &apos;
-
-##Escaping for Special Characters
-
-\*literal asterisks\*
-
-##Markdown extras
-
-###GFM task list
-
-- [x] GFM task list 1
-- [x] GFM task list 2
-- [ ] GFM task list 3
-    - [ ] GFM task list 3-1
-    - [ ] GFM task list 3-2
-    - [ ] GFM task list 3-3
-- [ ] GFM task list 4
-    - [ ] GFM task list 4-1
-    - [ ] GFM task list 4-2
-
-###Emoji mixed :smiley:
-
-> Blockquotes :star:
-
-####GFM task lists & Emoji & fontAwesome icon emoji & editormd logo emoji :editormd-logo-5x:
-
-- [x] :smiley: @mentions, :smiley: #refs, [links](), **formatting**, and <del>tags</del> supported :editormd-logo:;
-- [x] list syntax required (any unordered or ordered list supported) :editormd-logo-3x:;
-- [x] [ ] :smiley: this is a complete item :smiley:;
-- [ ] []this is an incomplete item [test link](#) :fa-star: @pandao; 
-- [ ] [ ]this is an incomplete item :fa-star: :fa-gear:;
-    - [ ] :smiley: this is an incomplete item [test link](#) :fa-star: :fa-gear:;
-    - [ ] :smiley: this is  :fa-star: :fa-gear: an incomplete item [test link](#);
-            
-###TeX(LaTeX)
-   
-$$E=mc^2$$
-
-Inline $$E=mc^2$$ Inline，Inline $$E=mc^2$$ Inline。
-
-$$\(\sqrt{3x-1}+(1+x)^2\)$$
-                    
-$$\sin(\alpha)^{\theta}=\sum_{i=0}^{n}(x^i + \cos(f))$$
-                
-###FlowChart
-
-```flow
-st=>start: Login
-op=>operation: Login operation
-cond=>condition: Successful Yes or No?
-e=>end: To admin
-
-st->op->cond
-cond(yes)->e
-cond(no)->op
-```
-
-###Sequence Diagram
-                    
-```seq
-Andrew->China: Says Hello 
-Note right of China: China thinks\nabout it 
-China-->Andrew: How are you? 
-Andrew->>China: I am good thanks!
-```
-
-###End
+Este proyecto está licenciado bajo la [MIT License](LICENSE).
