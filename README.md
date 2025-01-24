@@ -81,7 +81,7 @@ Este repositorio contiene dos scripts que permiten monitorear los recursos de un
 
 ---
 
-## Ejemplo de Visualización
+## Visualización
 
 Gráficos generados por el script Python incluyen:
 - **Uso de CPU (%) vs Tiempo**.
