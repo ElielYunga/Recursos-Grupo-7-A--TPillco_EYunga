@@ -91,13 +91,4 @@ Gráficos generados por el script Python incluyen:
 
 ---
 
-## Créditos
 
-- **Script Bash**: Monitoreo de recursos desarrollado en Bash para sistemas Linux.
-- **Script Python**: Visualización de recursos utilizando Pandas y Matplotlib.
-
----
-
-## Licencia
-
-Este proyecto está licenciado bajo la [MIT License](LICENSE).
